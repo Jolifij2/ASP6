@@ -1,0 +1,83 @@
+@model ControlsApp.Models.StudentViewModel
+
+@{
+    ViewData["Title"] = "Добавить студента";
+}
+
+<h1>Добавить нового студента</h1>
+
+<form asp-action="Create" method="post">
+
+    <div class="form-group">
+        <label asp-for="Student.Name"></label>
+        <input asp-for="Student.Name" class="form-control" placeholder="Введите имя" />
+        <span asp-validation-for="Student.Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Student.Age"></label>
+        <input asp-for="Student.Age" type="number" class="form-control" />
+        <span asp-validation-for="Student.Age" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Student.Email"></label>
+        <input asp-for="Student.Email" type="email" class="form-control" />
+        <span asp-validation-for="Student.Email" class="text-danger"></span>
+    </div>
+
+    <!-- ===== Задание 1. Телефон ===== -->
+    <div class="form-group">
+        <label asp-for="Student.Phone"></label>
+        <input asp-for="Student.Phone" type="tel" class="form-control" placeholder="Например: 79161234567" />
+        <span asp-validation-for="Student.Phone" class="text-danger"></span>
+    </div>
+
+    <!-- ===== Задание 2. Дата рождения ===== -->
+    <div class="form-group">
+        <label asp-for="Student.BirthDate"></label>
+        <input asp-for="Student.BirthDate" type="date" class="form-control" />
+        <span asp-validation-for="Student.BirthDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Student.Gender"></label><br />
+        @foreach (var gender in Model.Genders)
+        {
+            <label class="mr-3">
+                <input asp-for="Student.Gender" type="radio" value="@gender.Value" />
+                @gender.Text
+            </label>
+        }
+        <span asp-validation-for="Student.Gender" class="text-danger"></span>
+    </div>
+
+    <!-- ===== Задание 3. Множественный выбор городов ===== -->
+    <div class="form-group">
+        <label asp-for="Student.SelectedCities"></label>
+        <select asp-for="Student.SelectedCities" asp-items="Model.Cities" multiple class="form-control" size="4">
+        </select>
+        <span asp-validation-for="Student.SelectedCities" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>
+            <input asp-for="Student.IsActive" type="checkbox" />
+            @Html.DisplayNameFor(m => m.Student.IsActive)
+        </label>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Student.About"></label>
+        <textarea asp-for="Student.About" rows="4" class="form-control"></textarea>
+        <span asp-validation-for="Student.About" class="text-danger"></span>
+    </div>
+
+    <br />
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+    <a asp-action="Index" class="btn btn-secondary">Отмена</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
